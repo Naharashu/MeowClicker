@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>MeowClicker</title>
+    <meta charset="UTF-8">
+    <meta name="description" content="Simple clicker game">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="keywords" content="Cliker, cats, game, webgame">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.4/css/bulma.min.css">
+</head>
+
+<body>
+    <h2 style="text-align: center;" class="title">Meow clicker</h2>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="src/index.js"></script>
+    <h2 id="score" style="margin: 0 auto; text-align: center; font-size: 64px;;">0</h2>
+    <div style="flex: 1; display: flex; align-items: center; justify-content: center;">
+        <button onclick="play()" style="border-radius: 50%; height:150px; width: 150px;" class="button is-success">
+            Click
+        </button>
+    </div>
+    <footer style="position: fixed; bottom: 0; left: 0; width: 100%;">
+        <div style="display: flex; justify-content: flex-end;">
+            <button class="button is-primary"
+                style="display: inline-flex; align-items: center; justify-content: center; padding: 12px; right: 10px; width: 56px; height: 56px;">
+                <i class="fa fa-gear" style="font-size: 32px;"></i>
+            </button>
+        </div>
+    </footer>
+
+</body>
+
+</html>
