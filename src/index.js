@@ -10,9 +10,15 @@ let ach_50000 = false;
 let ach_95000 = false;
 let ach_100_000 = false;
 
+const sleep = ms => new Promise(r => setTimeout(r, ms));
+
+
 function load_storage() {
     const temp = localStorage.getItem("MeowClicker_total");
     total = temp ? parseInt(temp) : 0;
+
+    const delta_temp = localStorage.getItem("MeowClicker_delta");
+    delta = delta_temp ? parseInt(delta_temp) : 1;
 
     ach_100 = (localStorage.getItem("MeowClicker_ach_100") == 'true') ? true : false;
     ach_1000 = (localStorage.getItem("MeowClicker_ach_1000") == 'true') ? true : false;
@@ -29,20 +35,38 @@ document.addEventListener("DOMContentLoaded", () => {
     load_storage();
 });
 
-function play() {
+const meow1 = new Audio('resourse/sounds/meow1.mp3');
+const meow2 = new Audio('resourse/sounds/meow2.mp3');
+const meow3 = new Audio('resourse/sounds/meow3.mp3');
+meow1.volume = 0.9;
+
+async function play() {
+    const btn = document.getElementById("play-btn");
+    btn.style.transition = "width 0.1s ease-in-out, height 0.1s ease-in-out";
+    btn.style.width = "240px";
+    btn.style.height = "240px";
     const t = Math.random();
-    let audio;
-    if(t<0.5) audio = new Audio('resourse/sounds/meow1.mp3');
-    else audio = new Audio('resourse/sounds/meow2.mp3')
-    audio.volume = 0.2;
-    audio.play();
+    if(t<=0.5) {
+        meow1.currentTime = 0;
+        meow1.play();
+    } else if(t>=0.90) {
+        meow3.currentTime = 0;
+        meow3.play();
+    }
+    else {
+        meow2.currentTime = 0;
+        meow2.play();
+    }
     total += step * delta;
     update_score();
+    await sleep(88);
+    btn.style.width = "256px";
+    btn.style.height = "256px";
 }
 
 function update_score() {
     let element = document.getElementById("score");
-    element.innerText = total;
+    element.innerText = Math.ceil(total);
 
     if(!ach_100&&total>=100) {
         showAchievement("True hundred", "get score equal to 100", "");
