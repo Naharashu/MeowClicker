@@ -124,4 +124,28 @@ function showAchievement(title, description, iconUrl) {
     });
 }
 
+let seen = [];
 
+function buy(btnid, step_, delta_, needed) {
+    if(total<needed) {
+        Swal.fire({
+            title: "Opps!",
+            text: `You have not enought clicks to buy item! You ${needed-total} short.`,
+            icon: "error",
+            theme: "auto"
+        });
+        return;
+    } else if(seen.includes(btnid)) {
+        Swal.fire({
+            title: "Opps!",
+            text: `You have bought item!`,
+            icon: "error",
+            theme: "auto"
+        });
+        return;
+    }
+    document.getElementById(btnid).disabled = true;
+    step *= step_;
+    delta += delta_;
+    seen.push(btnid);
+}

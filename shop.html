@@ -8,11 +8,39 @@
         <meta name="keywords" content="Cliker, cats, game, webgame">
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.4/css/bulma.min.css">   
     </head>
-    <body>
+    <body style="display: flexbox;">
         <h2 style="text-align: center;" class="title">Shop</h2>
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
         <script src="src/index.js"></script>
-        <h2 id="score" style="margin: 0 auto; text-align: center; font-size: 64px;;">0</h2>
-        <button onclick="play()" style="border-radius: 50%; height:150px; width: 150px; display: block; margin: 25% auto;" class="button is-success">Click</button>
+        <div style="display: grid; display: grid; grid-template-columns: repeat(3, 1fr); gap: 5px; justify-content: center;">
+            <div class="box">
+                <h3>Boost +0.1x</h3>
+            </div>
+            <div class="box">
+                <h3>Boost +0.5x</h3>
+            </div>
+            <div class="box">
+                <h3>Boost +1.0x</h3>
+            </div>
+
+            <div class="box">
+                <h3 class="label">Step x2</h3>
+                <p>Makes click more productive in 2 times</p>
+                <br>
+                <button onclick="buy('stepx2', 2, 0, 250)" id="stepx2" class="button is-primary">Buy for 250 clicks</button>
+            </div>
+            <div class="box">
+                <h3 class="label">Step x4</h3>
+                <p>Makes click more productive in 4 times</p>
+                <br>
+                <button onclick="buy('stepx4', 4, 0, 2500)" id="stepx4" class="button is-primary">Buy for 2500 clicks</button>
+            </div>
+            <div class="box">
+                <h3 class="label">Step x8</h3>
+                <p>Makes click more productive in 8 times</p>
+                <br>
+                <button onclick="buy('stepx8', 8, 0, 10000)" id="stepx8" class="button is-primary">Buy for 10000 clicks</button>
+            </div>
+        </div>
     </body>
 </html>
