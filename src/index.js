@@ -9,16 +9,24 @@ let ach_25000 = false;
 let ach_50000 = false;
 let ach_95000 = false;
 let ach_100_000 = false;
+let ach_200_000 = false;
+
+let seen = [];
 
 const sleep = ms => new Promise(r => setTimeout(r, ms));
 
+let clicks = 0;
+let cps = 0;
 
 function load_storage() {
     const temp = localStorage.getItem("MeowClicker_total");
     total = temp ? parseInt(temp) : 0;
 
     const delta_temp = localStorage.getItem("MeowClicker_delta");
-    delta = delta_temp ? parseInt(delta_temp) : 1;
+    delta = delta_temp ? parseFloat(delta_temp) : 1;
+
+    const step_temp = localStorage.getItem("MeowClicker_step");
+    step = step_temp ? parseInt(step_temp) : 1;
 
     ach_100 = (localStorage.getItem("MeowClicker_ach_100") == 'true') ? true : false;
     ach_1000 = (localStorage.getItem("MeowClicker_ach_1000") == 'true') ? true : false;
@@ -27,12 +35,70 @@ function load_storage() {
     ach_50000 = (localStorage.getItem("MeowClicker_ach_50000") == 'true') ? true : false;
     ach_95000 = (localStorage.getItem("MeowClicker_ach_95000") == 'true') ? true : false;
     ach_100_000 = (localStorage.getItem("MeowClicker_ach_100_000") == 'true') ? true : false;
+    ach_200_000 = (localStorage.getItem("MeowClicker_ach_200_000") == 'true') ? true : false;
+
+    if(document.title != "MeowClicker") {
+        let temp_seen = localStorage.getItem("MeowClicker_seen");
+        seen = temp_seen ? JSON.parse(temp_seen) : [];
+        for(let i=0;i<seen.length;i++) {
+            document.getElementById(seen[i]).disabled = true;
+        }
+    }
+
+    if(step > Config.MAX_STEP|| delta > Config.MAX_DELTA) {
+        Shop.mark();
+    }
+
+    if(delta < 1) delta = 1;
+    if(step < 1) step = 1;
+    if(total < 0) total = 0;
 
     update_score();
 }
 
+const Config = Object.freeze({
+    MAX_DELTA: 2.6, 
+    MAX_STEP: 64,
+    MAX_INCOME: 166.5
+});
+
+const Shop = (() => {
+    let a = false;
+
+    return {
+        isValid: () => a,
+        mark: () => { a = true; }
+    };
+})();
+
+Object.freeze(Shop);
+
 document.addEventListener("DOMContentLoaded", () => {
     load_storage();
+});
+
+document.addEventListener("mousemove", ()=>{
+    if(Shop.isValid()) {
+        document.body.innerHTML = atob("PGgxIHN0eWxlPSJ0ZXh0LWFsaWduOiBjZW50ZXI7IiBjbGFzcz0ibGFiZWwiPllPVSBBUkUgQ0hFQVRFRDwvaDE+" );
+    }
+});
+
+document.addEventListener("keypress", ()=>{
+    if(Shop.isValid()) {
+        document.body.innerHTML = atob("PGgxIHN0eWxlPSJ0ZXh0LWFsaWduOiBjZW50ZXI7IiBjbGFzcz0ibGFiZWwiPllPVSBBUkUgQ0hFQVRFRDwvaDE+" );
+    }
+});
+
+document.addEventListener("", ()=>{
+    if(Shop.isValid()) {
+        document.body.innerHTML = atob("PGgxIHN0eWxlPSJ0ZXh0LWFsaWduOiBjZW50ZXI7IiBjbGFzcz0ibGFiZWwiPllPVSBBUkUgQ0hFQVRFRDwvaDE+" );
+    }
+});
+
+document.addEventListener("click", ()=>{
+    if(Shop.isValid()) {
+        document.body.innerHTML = atob("PGgxIHN0eWxlPSJ0ZXh0LWFsaWduOiBjZW50ZXI7IiBjbGFzcz0ibGFiZWwiPllPVSBBUkUgQ0hFQVRFRDwvaDE+" );
+    }
 });
 
 const meow1 = new Audio('resourse/sounds/meow1.mp3');
@@ -40,7 +106,74 @@ const meow2 = new Audio('resourse/sounds/meow2.mp3');
 const meow3 = new Audio('resourse/sounds/meow3.mp3');
 meow1.volume = 0.9;
 
+Object.defineProperty(window, "play", {
+    value: play,
+    writable: false,
+    configurable: false
+});
+
 async function play() {
+    clicks++;
+    if(cps>=21) {
+        Swal.fire({
+            title: `⛔ Stop!`,
+            html: `<p style="color: #ec2525;">You clicking too fast, do you use autoclicker?</p>`,
+            //imageUrl: iconUrl || 'https://placekitten.com',
+            //imageWidth: 60,
+            //imageHeight: 60,
+            background: '#1e1e24', 
+            color: '#fff',
+            position: 'top-end',  
+            showConfirmButton: false,
+            timer: 4000,        
+            timerProgressBar: true,
+            toast: true,         
+            showClass: { popup: 'animate__animated animate__slideInRight' },
+            hideClass: { popup: 'animate__animated animate__slideOutRight' }
+        });
+
+        return;
+    }
+    if(step > Config.MAX_STEP || delta > Config.MAX_DELTA) {
+        Swal.fire({
+            title: `⛔ Stop!`,
+            html: `<p style="color: #fd5050;">Your meows per click exceeded the possible limit.</p>`,
+            //imageUrl: iconUrl || 'https://placekitten.com',
+            //imageWidth: 60,
+            //imageHeight: 60,
+            background: '#1e1e24', 
+            color: '#fff',
+            position: 'top-end',  
+            showConfirmButton: false,
+            timer: 4000,        
+            timerProgressBar: true,
+            toast: true,         
+            showClass: { popup: 'animate__animated animate__slideInRight' },
+            hideClass: { popup: 'animate__animated animate__slideOutRight' }
+        });
+        return;
+    }
+    const temp = step * delta;
+    if(temp>Config.MAX_INCOME) {
+        Swal.fire({
+            title: `⛔ Stop!`,
+            html: `<p style="color: #fd5050;">Your income exceeded the possible limit.</p>`,
+            //imageUrl: iconUrl || 'https://placekitten.com',
+            //imageWidth: 60,
+            //imageHeight: 60,
+            background: '#1e1e24', 
+            color: '#fff',
+            position: 'top-end',  
+            showConfirmButton: false,
+            timer: 4000,        
+            timerProgressBar: true,
+            toast: true,         
+            showClass: { popup: 'animate__animated animate__slideInRight' },
+            hideClass: { popup: 'animate__animated animate__slideOutRight' }
+        });
+        return;
+    }
+    total += temp;
     const btn = document.getElementById("play-btn");
     btn.style.transition = "width 0.1s ease-in-out, height 0.1s ease-in-out";
     btn.style.width = "240px";
@@ -57,12 +190,18 @@ async function play() {
         meow2.currentTime = 0;
         meow2.play();
     }
-    total += step * delta;
     update_score();
     await sleep(88);
     btn.style.width = "256px";
     btn.style.height = "256px";
 }
+
+setInterval(() => {
+    cps = clicks;
+    clicks = 0;
+}, 1000);
+
+
 
 function update_score() {
     let element = document.getElementById("score");
@@ -96,6 +235,10 @@ function update_score() {
         showAchievement("Many many meows", "get score equal to 100,000", "");
         ach_100_000 = true;
         localStorage.setItem("MeowClicker_ach_100_000", "true");
+    } else if(!ach_200_000&&total>=200000) {
+        showAchievement("Double hundred thousand", "get score equal to 200,000", "");
+        ach_200_000 = true;
+        localStorage.setItem("MeowClicker_ach_200_000", "true");
     }
 
     localStorage.setItem("MeowClicker_total", total);
@@ -124,7 +267,7 @@ function showAchievement(title, description, iconUrl) {
     });
 }
 
-let seen = [];
+
 
 function buy(btnid, step_, delta_, needed) {
     if(total<needed) {
@@ -144,8 +287,16 @@ function buy(btnid, step_, delta_, needed) {
         });
         return;
     }
+    total -= needed;
     document.getElementById(btnid).disabled = true;
     step *= step_;
     delta += delta_;
+
+    localStorage.setItem("MeowClicker_step", step);
+    localStorage.setItem("MeowClicker_delta", delta);
+    localStorage.setItem("MeowClicker_total", total);
+    //update_score();
+
     seen.push(btnid);
+    localStorage.setItem("MeowClicker_seen", JSON.stringify(seen));
 }

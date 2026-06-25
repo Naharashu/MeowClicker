@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>MeowClicker</title>
+        <title>MeowClicker Shop</title>
         <meta charset="UTF-8">
         <meta name="description" content="Simple clicker game">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,17 +10,34 @@
     </head>
     <body style="display: flexbox;">
         <h2 style="text-align: center;" class="title">Shop</h2>
+        <div style="display: flex; justify-content: flex-start;">
+            <a href="index.html" class="button is-primary"
+                style="display: inline-flex; align-items: center; justify-content: center; padding: 12px; left: 10px; width: 110px; height: 56px;">
+                <i class="fa fa-solid fa-arrow-left"></i>
+                <p style="font-family: monospace; padding: 8px;">Go back</p>
+            </a>
+        </div>
+        <br>
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
         <script src="src/index.js"></script>
         <div style="display: grid; display: grid; grid-template-columns: repeat(3, 1fr); gap: 5px; justify-content: center;">
             <div class="box">
-                <h3>Boost +0.1x</h3>
+                <h3 class="label">Boost +0.1x</h3>
+                <p>Makes multiplier bigger by 0.1</p>
+                <br>
+                <button onclick="buy('delta01', 0, 0.1, 300)" id="delta01" class="button is-primary">Buy for 300 clicks</button>
             </div>
             <div class="box">
-                <h3>Boost +0.5x</h3>
+                <h3 class="label">Boost +0.5x</h3>
+                <p>Makes multiplier bigger by 0.5</p>
+                <br>
+                <button onclick="buy('delta05', 0, 0.5, 1000)" id="delta05" class="button is-primary">Buy for 1000 clicks</button>
             </div>
             <div class="box">
-                <h3>Boost +1.0x</h3>
+                <h3 class="label">Boost +1.0x</h3>
+                <p>Makes multiplier bigger by 1.0</p>
+                <br>
+                <button onclick="buy('delta10', 0, 1.0, 5000)" id="delta10" class="button is-primary">Buy for 5000 clicks</button>
             </div>
 
             <div class="box">
@@ -41,6 +58,7 @@
                 <br>
                 <button onclick="buy('stepx8', 8, 0, 10000)" id="stepx8" class="button is-primary">Buy for 10000 clicks</button>
             </div>
+
         </div>
     </body>
 </html>
