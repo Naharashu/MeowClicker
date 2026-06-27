@@ -16,6 +16,17 @@ function reset_progress() {
                 icon: "success",
                 theme: "auto"
             });
+            fetch("https://clicker-api.sagansi789.workers.dev", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    id: localStorage.getItem("PlayerUUIDMClicker"),
+                    action: "delete"
+                })
+            })
+                .then(r => r.json())
             localStorage.removeItem("MeowClicker_total");
             localStorage.removeItem("MeowClicker_delta");
             localStorage.removeItem("MeowClicker_step");

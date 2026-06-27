@@ -1,0 +1,6 @@
+CREATE TABLE players (
+    id TEXT PRIMARY KEY,
+    total INTEGER DEFAULT 0,
+    delta INTEGER DEFAULT 1,
+    step INTEGER DEFAULT 1
+);
