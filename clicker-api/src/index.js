@@ -5,11 +5,11 @@ export default {
 		const Config = Object.freeze({
 			MAX_DELTA: 2.6,
 			MAX_STEP: 64,
-			MAX_INCOME: 99840
+			MAX_INCOME: 104706
 		});
 
 		const corsHeaders = {
-			"Access-Control-Allow-Origin": "*",
+			"Access-Control-Allow-Origin": "https://naharashu.github.io/MeowClicker/",
 			"Access-Control-Allow-Methods": "GET, POST, OPTIONS",
 			"Access-Control-Allow-Headers": "Content-Type",
 		};
@@ -57,7 +57,7 @@ export default {
 
 
 		if (data.action === "click") {
-			if (data.cps >= 21) return Response.json(player, {
+			if (data.cps >= 630) return Response.json(player, {
 				headers: corsHeaders,
 			});
 

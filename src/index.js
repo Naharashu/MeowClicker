@@ -86,6 +86,7 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 document.addEventListener("mousemove", () => {
+    cps = clicks;
     if (Shop.isValid()) {
         document.body.innerHTML = atob("PGgxIHN0eWxlPSJ0ZXh0LWFsaWduOiBjZW50ZXI7IiBjbGFzcz0ibGFiZWwiPllPVSBBUkUgQ0hFQVRFRDwvaDE+");
     }
@@ -97,13 +98,9 @@ document.addEventListener("keypress", () => {
     }
 });
 
-document.addEventListener("", () => {
-    if (Shop.isValid()) {
-        document.body.innerHTML = atob("PGgxIHN0eWxlPSJ0ZXh0LWFsaWduOiBjZW50ZXI7IiBjbGFzcz0ibGFiZWwiPllPVSBBUkUgQ0hFQVRFRDwvaDE+");
-    }
-});
 
 document.addEventListener("click", () => {
+    cps = clicks;
     if (Shop.isValid()) {
         document.body.innerHTML = atob("PGgxIHN0eWxlPSJ0ZXh0LWFsaWduOiBjZW50ZXI7IiBjbGFzcz0ibGFiZWwiPllPVSBBUkUgQ0hFQVRFRDwvaDE+");
     }
@@ -122,7 +119,7 @@ Object.defineProperty(window, "play", {
 
 async function play() {
     clicks++;
-    if (cps >= 21) {
+    if (cps >= 630) {
         Swal.fire({
             title: `⛔ Stop!`,
             html: `<p style="color: #ec2525;">You clicking too fast, do you use autoclicker?</p>`,
@@ -205,9 +202,9 @@ async function play() {
 }
 
 setInterval(() => {
-    cps = clicks/30;
+    cps = clicks
     clicks = 0;
-    if(cps>=21) {
+    if(cps>=630) {
         Swal.fire({
             title: `⛔ Stop!`,
             html: `<p style="color: #ec2525;">You clicking too fast, do you use autoclicker?</p>`,
@@ -367,7 +364,7 @@ function buy(btnid, step_, delta_, needed) {
     localStorage.setItem("MeowClicker_seen", JSON.stringify(seen));
 }
 
-// Source - https://stackoverflow.com/a/2117523
+// Source - https://stackoverflow.com/a/63017523
 // Posted by broofa, modified by community. See post 'Timeline' for change history
 // Retrieved 2026-06-27, License - CC BY-SA 4.0
 
